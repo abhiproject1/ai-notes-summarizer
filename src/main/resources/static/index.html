@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Note Summarizer</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 800px;
+      margin: 40px auto;
+    }
+
+    textarea {
+      width: 100%;
+      height: 150px;
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    #response {
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      min-height: 100px;
+      white-space: pre-wrap;
+    }
+
+    #loading {
+      margin-top: 10px;
+      color: blue;
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>AI Note Summarizer</h1>
+
+<textarea id="notes" placeholder="Enter your notes here"></textarea>
+
+<br>
+
+<button onclick="summarize()">Summarize</button>
+
+<div id="loading">Generating summary...</div>
+
+<div id="response">
+  AI Response appears here...
+</div>
+
+<script>
+
+  async function summarize() {
+
+    const notes = document.getElementById("notes").value;
+    const responseBox = document.getElementById("response");
+    const loadingBox = document.getElementById("loading");
+
+    if (!notes.trim()) {
+      responseBox.innerText = "Please enter some notes first.";
+      return;
+    }
+
+    loadingBox.style.display = "block";
+    responseBox.innerText = "";
+
+    try {
+      const response = await fetch("http://localhost:8080/api/summarize", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ notes: notes })
+      });
+
+      if (!response.ok) {
+        throw new Error("Server error: " + response.status);
+      }
+
+      const data = await response.json();
+
+      responseBox.innerText = data.summary;
+
+    } catch (error) {
+      responseBox.innerText = "Error: " + error.message;
+    } finally {
+      loadingBox.style.display = "none";
+    }
+  }
+
+</script>
+
+</body>
+</html>
