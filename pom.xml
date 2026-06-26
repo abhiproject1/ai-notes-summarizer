@@ -8,7 +8,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.5.3</version>
+        <version>3.3.5</version>
         <relativePath/>
     </parent>
 
@@ -22,7 +22,7 @@
         <spring-ai.version>1.0.0</spring-ai.version>
     </properties>
 
-    <!-- ✅ Spring AI BOM -->
+    <!-- Spring AI BOM -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -35,7 +35,7 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- ✅ Required for Spring AI artifacts -->
+    <!-- Spring AI milestone repo -->
     <repositories>
         <repository>
             <id>spring-milestones</id>
@@ -45,7 +45,7 @@
 
     <dependencies>
 
-        <!-- Spring Boot Web -->
+        <!-- Web (KEEP ONLY ONCE) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -64,7 +64,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Devtools -->
+        <!-- DevTools -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -84,25 +84,18 @@
     <build>
         <plugins>
 
+            <!-- Spring Boot Plugin -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
             </plugin>
 
+            <!-- Compiler Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>21</source>
-                    <target>21</target>
+                    <release>21</release>
                     <annotationProcessorPaths>
                         <path>
                             <groupId>org.projectlombok</groupId>
